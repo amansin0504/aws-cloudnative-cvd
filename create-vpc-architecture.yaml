@@ -1,0 +1,109 @@
+Description:  This template deploys the management, staging and production VPC, with public and private subnets spread
+  across Availability Zones. It also deploys an internet gateway, with a default
+  route on the public subnets and NAT gateways (one in each AZ) with default routes in the private subnets.
+
+Parameters:
+  EnvironmentName:
+    Description: An environment name that is prefixed to resource names
+    Type: String
+    Default: secure-cloudnative
+
+  VpcMgmtCIDR:
+    Description: Please enter the IP range (CIDR notation) for management VPC
+    Type: String
+    Default: 10.10.0.0/16
+  VpcStageCIDR:
+    Description: Please enter the IP range (CIDR notation) for staging VPC
+    Type: String
+    Default: 10.20.0.0/16
+  VpcProdCIDR:
+    Description: Please enter the IP range (CIDR notation) for production VPC
+    Type: String
+    Default: 10.30.0.0/16
+
+  PublicSubnetmgmt1CIDR:
+    Description: Please enter the public subnet in the first Availability Zone in management VPC
+    Type: String
+    Default: 10.10.10.0/24
+  PublicSubnetmgmt2CIDR:
+    Description: Please enter the public subnet in the second Availability Zone in management VPC
+    Type: String
+    Default: 10.10.11.0/24
+  PrivateSubnetmgmt1CIDR:
+    Description: Please enter the private subnet in the first Availability Zone in management VPC
+    Type: String
+    Default: 10.10.20.0/24
+  PrivateSubnetmgmt2CIDR:
+    Description: Please enter the the private subnet in the second Availability Zone in management VPC
+    Type: String
+    Default: 10.10.21.0/24
+
+  PublicSubnetstage1CIDR:
+    Description: Please enter the public subnet in the first Availability Zone in stage VPC
+    Type: String
+    Default: 10.20.10.0/24
+  PublicSubnetstage2CIDR:
+    Description: Please enter the public subnet in the second Availability Zone in stage VPC
+    Type: String
+    Default: 10.20.11.0/24
+  PublicSubnetstage3CIDR:
+    Description: Please enter the public subnet in the third Availability Zone in stage VPC
+    Type: String
+    Default: 10.20.12.0/24
+  PrivateSubnetstage1CIDR:
+    Description: Please enter the private subnet in the first Availability Zone in stage VPC
+    Type: String
+    Default: 10.20.20.0/24
+  PrivateSubnetstage2CIDR:
+    Description: Please enter the private subnet in the second Availability Zone in stage VPC
+    Type: String
+    Default: 10.20.21.0/24
+  PrivateSubnetstage3CIDR:
+    Description: Please enter the the private subnet in the third Availability Zone in stage VPC
+    Type: String
+    Default: 10.20.22.0/24
+
+  PublicSubnetprod1CIDR:
+    Description: Please enter the public subnet in the first Availability Zone in prod VPC
+    Type: String
+    Default: 10.30.10.0/24
+  PublicSubnetprod2CIDR:
+    Description: Please enter the public subnet in the second Availability Zone in prod VPC
+    Type: String
+    Default: 10.30.11.0/24
+  PublicSubnetprod3CIDR:
+    Description: Please enter the public subnet in the third Availability Zone in prod VPC
+    Type: String
+    Default: 10.30.12.0/24
+  PrivateSubnetprod1CIDR:
+    Description: Please enter the private subnet in the first Availability Zone in prod VPC
+    Type: String
+    Default: 10.30.20.0/24
+  PrivateSubnetprod2CIDR:
+    Description: Please enter the private subnet in the second Availability Zone in prod VPC
+    Type: String
+    Default: 10.30.21.0/24
+  PrivateSubnetprod3CIDR:
+    Description: Please enter the the private subnet in the third Availability Zone in prod VPC
+    Type: String
+    Default: 10.30.22.0/24
+
+Resources:
+  managementVPC:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/create-management-vpc.yaml
+      Parameters:
+        InstanceType: t2.micro
+  stagingVPC:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/create-production-vpc.yaml
+      Parameters:
+        InstanceType: t2.micro
+  productionVPC:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/create-staging-vpc.yaml
+      Parameters:
+        InstanceType: t2.micro

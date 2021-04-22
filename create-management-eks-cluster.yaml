@@ -1,0 +1,24 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: management-eks
+  region: us-east-2
+
+vpc:
+  subnets:
+    private:
+      us-east-2a: { id: subnet-0a6e2bccf18a9f43c }
+      us-east-2b: { id: subnet-0d5bf58fcc1ea8b9c }
+
+iam:
+  withOIDC: true
+
+nodeGroups:
+  - name: gitlab-workers
+    labels: { role: gitlab }
+    instanceType: m5.xlarge
+    desiredCapacity: 2
+    privateNetworking: true
+    ssh:
+      publicKeyName: <UPDATE-EC2-KEY-NAME-HERE>
