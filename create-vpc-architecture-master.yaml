@@ -8,6 +8,11 @@ Parameters:
     Type: String
     Default: secure-cloudnative
 
+  S3CFMBucket:
+    Description: S3 Bucket name with Cloudformation templates
+    Type: "String"
+    AllowedPattern: "[a-z0-9-]*"
+
   VpcMgmtCIDR:
     Description: Please enter the IP range (CIDR notation) for management VPC
     Type: String
@@ -92,18 +97,39 @@ Resources:
   managementVPC:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://raw.githubusercontent.com/amansin0504/aws-cloudnative-cvd/main/create-management-vpc.yaml
+      TemplateURL: !Join [ "/", [ "https://s3.amazonaws.com",!Ref S3CFMBucket,"create-management-vpc.yaml"] ]
       Parameters:
-        InstanceType: t2.micro
+        EnvironmentName: !Ref EnvironmentName
+        VpcCIDR: !Ref VpcMgmtCIDR
+        PublicSubnet1CIDR: !Ref PublicSubnetmgmt1CIDR
+        PublicSubnet2CIDR: !Ref PublicSubnetmgmt2CIDR
+        PrivateSubnet1CIDR: !Ref PrivateSubnetmgmt1CIDR
+        PrivateSubnet2CIDR: !Ref PrivateSubnetmgmt2CIDR
+
   stagingVPC:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://raw.githubusercontent.com/amansin0504/aws-cloudnative-cvd/main/create-production-vpc.yaml
+      TemplateURL: !Join [ "/", [ "https://s3.amazonaws.com",!Ref S3CFMBucket,"create-staging-vpc.yaml"] ]
       Parameters:
-        InstanceType: t2.micro
+        EnvironmentName: !Ref EnvironmentName
+        VpcCIDR: !Ref VpcStageCIDR
+        PublicSubnet1CIDR: !Ref PublicSubnetstage1CIDR
+        PublicSubnet2CIDR: !Ref PublicSubnetstage2CIDR
+        PublicSubnet3CIDR: !Ref PublicSubnetstage3CIDR
+        PrivateSubnet1CIDR: !Ref PrivateSubnetstage1CIDR
+        PrivateSubnet2CIDR: !Ref PrivateSubnetstage2CIDR
+        PrivateSubnet3CIDR: !Ref PrivateSubnetstage3CIDR
+
   productionVPC:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://raw.githubusercontent.com/amansin0504/aws-cloudnative-cvd/main/create-staging-vpc.yaml
+      TemplateURL: !Join [ "/", [ "https://s3.amazonaws.com",!Ref S3CFMBucket,"create-production-vpc.yaml"] ]
       Parameters:
-        InstanceType: t2.micro
+        EnvironmentName: !Ref EnvironmentName
+        VpcCIDR: !Ref VpcProdCIDR
+        PublicSubnet1CIDR: !Ref PublicSubnetprod1CIDR
+        PublicSubnet2CIDR: !Ref PublicSubnetprod2CIDR
+        PublicSubnet3CIDR: !Ref PublicSubnetprod3CIDR
+        PrivateSubnet1CIDR: !Ref PrivateSubnetprod1CIDR
+        PrivateSubnet2CIDR: !Ref PrivateSubnetprod2CIDR
+        PrivateSubnet3CIDR: !Ref PrivateSubnetprod3CIDR
