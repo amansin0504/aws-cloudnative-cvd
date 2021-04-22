@@ -92,18 +92,18 @@ Resources:
   managementVPC:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/create-management-vpc.yaml
+      TemplateURL: https://raw.githubusercontent.com/amansin0504/aws-cloudnative-cvd/main/create-management-vpc.yaml
       Parameters:
         InstanceType: t2.micro
   stagingVPC:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/create-production-vpc.yaml
+      TemplateURL: https://raw.githubusercontent.com/amansin0504/aws-cloudnative-cvd/main/create-production-vpc.yaml
       Parameters:
         InstanceType: t2.micro
   productionVPC:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/create-staging-vpc.yaml
+      TemplateURL: https://raw.githubusercontent.com/amansin0504/aws-cloudnative-cvd/main/create-staging-vpc.yaml
       Parameters:
         InstanceType: t2.micro
