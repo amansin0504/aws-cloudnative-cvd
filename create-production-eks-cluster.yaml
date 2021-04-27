@@ -3,18 +3,24 @@ kind: ClusterConfig
 
 metadata:
   name: production-eks
-  region: us-east-2
+  region: us-west-2
 
 iam:
   withOIDC: true
 
 vpc:
-  cidr: 10.30.0.0/16
+  subnets:
+    private:
+      us-west-2a: { id: subnet-0a6e2bccf18a9f43c }
+      us-west-2b: { id: subnet-0d5bf58fcc1ea8b9c }
+      us-west-2c: { id: subnet-0d5bf58fcc1ea8b9c }
 
 nodeGroups:
   - name: production-workers
+    labels: { role: production }
     instanceType: m5.large
     desiredCapacity: 3
+    privateNetworking: true
     ssh:
       allow: true
-      publicKeyName: <UPDATE-EC2-KEY-NAME-HERE>
+      publicKeyName: oregon

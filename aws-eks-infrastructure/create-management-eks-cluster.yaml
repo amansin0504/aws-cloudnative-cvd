@@ -3,22 +3,22 @@ kind: ClusterConfig
 
 metadata:
   name: management-eks
-  region: us-west-2
+  region: <aws-region>
 
 vpc:
   subnets:
     private:
-      us-west-2a: { id: subnet-050fe514288ae9d98 }
-      us-west-2b: { id: subnet-089baab835b799c6a }
+      <aws-az-1>: { id: <subnet-id> }
+      <aws-az-2>: { id: <subnet-id> }
 
 iam:
   withOIDC: true
 
 nodeGroups:
-  - name: management-workers
+  - name: mgmt-workers
     labels: { role: mgmt }
-    instanceType: m5.xlarge
+    instanceType: m5.large
     desiredCapacity: 2
     privateNetworking: true
     ssh:
-      publicKeyName: oregon
+      publicKeyName: <update-ec2-keyname-here>

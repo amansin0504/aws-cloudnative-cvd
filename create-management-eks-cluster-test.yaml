@@ -1,0 +1,129 @@
+Description:  This template deploys a two node EKS cluster in management VPC and a three node EKS cluster each in
+  Staging and Production VPCs
+
+Mappings:
+  ServicePrincipals:
+    aws:
+      ec2: ec2.amazonaws.com
+
+Resources:
+  #============================================================================#
+  # EKS Cluster Role
+  #============================================================================#
+  eksClusterRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - eks.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+  #============================================================================#
+  # EKS Node Role
+  #============================================================================#
+  NodeInstanceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - !FindInMap [ServicePrincipals, !Ref "AWS::Partition", ec2]
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - !Sub "arn:${AWS::Partition}:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+        - !Sub "arn:${AWS::Partition}:iam::aws:policy/AmazonEKS_CNI_Policy"
+        - !Sub "arn:${AWS::Partition}:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      Path: /
+
+  #============================================================================#
+  # Management EKS cluster and Node Group
+  #============================================================================#
+  managementEKS:
+    Type: AWS::EKS::Cluster
+    DependsOn: [eksClusterRole]
+    Properties:
+      Name: management-eks1
+      RoleArn: !GetAtt eksClusterRole.Arn
+      ResourcesVpcConfig:
+        SubnetIds:
+          - subnet-050fe514288ae9d98
+          - subnet-089baab835b799c6a
+  managementNodegroup:
+    DependsOn: [NodeInstanceRole,managementEKS]
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      ClusterName: management-eks1
+      NodeRole: !GetAtt NodeInstanceRole.Arn
+      ScalingConfig:
+        MinSize: 2
+        DesiredSize: 2
+        MaxSize: 2
+      Subnets:
+        - subnet-050fe514288ae9d98
+        - subnet-089baab835b799c6a
+
+  #============================================================================#
+  # Staging EKS cluster and Node Group
+  #============================================================================#
+  stagingEKS:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: staging-eks1
+      RoleArn: !GetAtt eksClusterRole.Arn
+      ResourcesVpcConfig:
+        SubnetIds:
+          - subnet-07c609da5bfff0f6e
+          - subnet-03df1da33385e753e
+          - subnet-00bed2409ea85b772
+  stagingNodegroup:
+    DependsOn: [NodeInstanceRole,stagingEKS]
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      ClusterName: staging-eks1
+      NodeRole: !GetAtt NodeInstanceRole.Arn
+      ScalingConfig:
+        MinSize: 3
+        DesiredSize: 3
+        MaxSize: 3
+      Subnets:
+        - subnet-07c609da5bfff0f6e
+        - subnet-03df1da33385e753e
+        - subnet-00bed2409ea85b772
+
+  #============================================================================#
+  # Production EKS cluster and Node Group
+  #============================================================================#
+  productionEKS:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: production-eks1
+      RoleArn: !GetAtt eksClusterRole.Arn
+      ResourcesVpcConfig:
+        SubnetIds:
+         - subnet-0ebcfbaa4afb31009
+         - subnet-0829b38e6c14235ee
+         - subnet-0fa31e2b0f679c456
+  productionNodegroup:
+    DependsOn: [NodeInstanceRole,productionEKS]
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      ClusterName: production-eks1
+      NodeRole: !GetAtt NodeInstanceRole.Arn
+      ScalingConfig:
+        MinSize: 3
+        DesiredSize: 3
+        MaxSize: 3
+      Subnets:
+        - subnet-0ebcfbaa4afb31009
+        - subnet-0829b38e6c14235ee
+        - subnet-0fa31e2b0f679c456
