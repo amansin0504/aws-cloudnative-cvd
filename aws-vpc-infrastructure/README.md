@@ -9,6 +9,7 @@ This CloudFormation stack provisions following resources:
   - Internet Gateway attached to VPC  
   - Private Route Tables - One for each availability zone with default route pointing to corresponding NAT Gateway.
   - Public Route Tables - One route table associate to public subnets, default route points to Internet Gateway  
+  - Bastion hosts in each public subnet (installed with utilities awscli, eksctl, kubectl, helm, Git client)
 
 •	Staging VPC - The VPC is spread across three availability zones - (CIDR - 10.20.0.0/16).
   - Three public subnets - 10.20.10.0/24, 10.20.20.0/24 and 10.20.30.0/24 in availability zones 1,2 and 3 respectively.
