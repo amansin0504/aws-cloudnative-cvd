@@ -37,6 +37,141 @@
             type: subnet
             value: "169.254.169.254/32"
         type: and
+  - name: Sock Shop Tetration add k8s-control-plane-private
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: k8s-control-plane-private
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "{{K8S_CONTROL_PRIVATE_IP_ADDRESSES}}"
+        type: or
+  - name: Sock Shop Tetration add elb-health-monitor
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: elb-health-monitor
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "{{ELB_HEALTH_MONITOR_IP_ADDRESSES}}"
+        type: or
+  - name: Sock Shop Tetration add k8s-api
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: k8s-api
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "{{K8S_API_IP_ADDRESSES}}"
+        type: or
+  - name: Sock Shop Tetration add ntp.ubuntu.com
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: ntp.ubuntu.com
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "91.189.94.4/32"
+          - field: ip
+            type: subnet
+            value: "91.189.89.198/32"
+          - field: ip
+            type: subnet
+            value: "91.189.89.199/32"
+          - field: ip
+            type: subnet
+            value: "91.189.91.157/32"
+        type: or
+  - name: Sock Shop Tetration add api.snapcraft.io
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: api.snapcraft.io
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "91.189.92.19/32"
+          - field: ip
+            type: subnet
+            value: "91.189.92.38/32"
+          - field: ip
+            type: subnet
+            value: "91.189.92.20/32"
+          - field: ip
+            type: subnet
+            value: "91.189.92.41/32"
+        type: or
+  - name: Sock Shop Tetration add vpc-private-gws
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: vpc-private-gws
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "10.50.110.1/32"
+          - field: ip
+            type: subnet
+            value: "10.50.120.1/32"
+          - field: ip
+            type: subnet
+            value: "10.50.130.1/32"
+          - field: ip
+            type: subnet
+            value: "10.50.140.1/32"
+        type: or
+  - name: Sock Shop Tetration add aws-subnets
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: aws-subnets
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "52.46.128.0/19"
+          - field: ip
+            type: subnet
+            value: "52.94.224.0/20"
+        type: or
   - name: Sock Shop Tetration add vpc
     tetration_inventory_filter:
       provider:
@@ -50,7 +185,7 @@
         filters:
           - field: ip
             type: subnet
-            value: "192.168.0.0/16"
+            value: "10.50.0.0/16"
         type: and
   - name: Sock Shop Tetration add vpc-dns
     tetration_inventory_filter:
@@ -65,7 +200,73 @@
         filters:
           - field: ip
             type: subnet
-            value: "192.168.0.2/32"
+            value: "10.50.0.2/32"
+        type: and
+  - name: Sock Shop Tetration add swc
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: swc
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "107.22.247.3/32"
+          - field: ip
+            type: subnet
+            value: "107.22.210.176/32"
+          - field: ip
+            type: subnet
+            value: "107.22.217.211/32"
+        type: or
+  - name: Sock Shop Tetration add duo
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: duo
+      query:
+        filters:
+          - field: ip
+            type: subnet
+            value: "54.241.191.128/26"
+          - field: ip
+            type: subnet
+            value: "54.236.251.192/26"
+          - field: ip
+            type: subnet
+            value: "52.19.127.192/26"
+          - field: ip
+            type: subnet
+            value: "52.32.63.128/26"
+          - field: ip
+            type: subnet
+            value: "52.59.243.192/26"
+          - field: ip
+            type: subnet
+            value: "35.182.14.128/26"
+        type: or
+  - name: Sock Shop Tetration add k8s-cluster
+    tetration_inventory_filter:
+      provider:
+        server_endpoint: "{{ tetration_url }}"
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+      app_scope_name: "{{ app_scope_name }}"
+      state: present
+      name: k8s-cluster
+      query:
+        filters:
+          - field: user_orchestrator_system/cluster_name
+            type: eq
+            value: "{{ external_orchestrator_name_k8s }}"
         type: and
   - name: Sock Shop Tetration add sock-shop-prod
     tetration_inventory_filter:
@@ -586,3 +787,5 @@
             type: eq
             value: "{{ k8s_namespace }}"
         type: and
+
+
