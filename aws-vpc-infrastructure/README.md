@@ -1,4 +1,4 @@
-# AWS VPC infrastructure
+# AWS VPC Infrastructure
 ![alt text](https://github.com/amansin0504/aws-cloudnative-cvd/blob/main/aws-vpc-infrastructure/Images/AWS-Infra.png)
 
 ## AWS Resources:  
