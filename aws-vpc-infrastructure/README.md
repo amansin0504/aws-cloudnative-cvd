@@ -1,7 +1,7 @@
 # AWS VPC infrastructure
 ![alt text](https://github.com/amansin0504/aws-cloudnative-cvd/blob/main/aws-vpc-infrastructure/Images/AWS-Infra.png)
 
-This CloudFormation stack provisions following resources:  
+## This CloudFormation stack provisions following resources:  
 •	Management VPC - The VPC is spread across two availability zones - (CIDR - 10.10.0.0/16).
   - Two public subnets - 10.10.10.0/24 in availability zone 1 and 10.10.20.0/24 in availability zone 2  
   - Two private subnets - 10.10.11.0/24 in availability zone 1 and 10.10.21.0/24 in availability zone 2  
@@ -29,7 +29,7 @@ This CloudFormation stack provisions following resources:
 
 •	VPC Peering - The template provisions a peering link between management VPC, staging VPC and management VPC, production VPC. It also add the necessary routes required for communication between the management, staging and production VPCs.  
 
-Steps to deploy:
+## Steps to deploy:  
 •	Upload all the files in this repo to an S3 bucket.  
 •	Navigate to CloudFormation > Create Stack and add the Amazon S3 URL for master template file (create-vpc-architecture-master.yaml).  
 •	Fill all the prompted details(include the name of S3 bucket with all the template files) and create the stack. The CloudFormation stack with deploy all the resources in a nested manner. A Sample run will look as below.  
