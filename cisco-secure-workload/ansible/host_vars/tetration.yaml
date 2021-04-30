@@ -11,11 +11,11 @@ validate_certs: true
 
 # specific details for the tetration app env
 app_scope_name: "INTGSSOPOV:SAFE_CLOUDNATIVE"
-external_orchestrator_name_k8s: "my-eks-cluster"
-k8s_namespace: "sock-shop-prod"
+external_orchestrator_name_k8s: "staging-eks"
+k8s_namespace: "sock-shop"
 
 #Cluster Specific details
-K8S_CONTROL_PRIVATE_IP_ADDRESSES: "192.168.0.0/16"
-ELB_HEALTH_MONITOR_IP_ADDRESSES: "192.168.0.0/16"
-K8S_API_IP_ADDRESSES: "192.168.0.0/16"
-
+K8S_CONTROL_PRIVATE_IP_ADDRESSES: "10.0.0.0/8"
+ELB_HEALTH_MONITOR_IP_ADDRESSES: "10.0.0.0/8"
+K8S_API_IP_ADDRESSES: "10.0.0.0/8"
+ELB_HEALTH_MONITOR_PORT: "80"
