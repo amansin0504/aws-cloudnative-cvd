@@ -90,21 +90,21 @@
         api_secret: "{{ api_secret }}"
       app_scope_name: "{{ app_scope_name }}"
       state: present
-      name: ntp.ubuntu.com
+      name: pool.ntp.org
       query:
         filters:
           - field: ip
             type: subnet
-            value: "91.189.94.4/32"
+            value: "94.130.49.186/32"
           - field: ip
             type: subnet
-            value: "91.189.89.198/32"
+            value: "12.167.151.1/32"
           - field: ip
             type: subnet
-            value: "91.189.89.199/32"
+            value: "104.236.116.147/32"
           - field: ip
             type: subnet
-            value: "91.189.91.157/32"
+            value: "129.70.132.34/32"
         type: or
   - name: Sock Shop Tetration add api.snapcraft.io
     tetration_inventory_filter:
@@ -143,16 +143,22 @@
         filters:
           - field: ip
             type: subnet
-            value: "10.50.110.1/32"
+            value: "10.20.20.0/32"
           - field: ip
             type: subnet
-            value: "10.50.120.1/32"
+            value: "10.20.21.1/32"
           - field: ip
             type: subnet
-            value: "10.50.130.1/32"
+            value: "10.20.22.1/32"
           - field: ip
             type: subnet
-            value: "10.50.140.1/32"
+            value: "10.20.10.1/32"
+          - field: ip
+            type: subnet
+            value: "10.20.11.1/32"
+          - field: ip
+            type: subnet
+            value: "10.20.12.1/32"
         type: or
   - name: Sock Shop Tetration add aws-subnets
     tetration_inventory_filter:
@@ -185,7 +191,7 @@
         filters:
           - field: ip
             type: subnet
-            value: "10.50.0.0/16"
+            value: "10.20.0.0/16"
         type: and
   - name: Sock Shop Tetration add vpc-dns
     tetration_inventory_filter:
@@ -200,7 +206,7 @@
         filters:
           - field: ip
             type: subnet
-            value: "10.50.0.2/32"
+            value: "10.20.0.2/32"
         type: and
   - name: Sock Shop Tetration add swc
     tetration_inventory_filter:
@@ -268,7 +274,7 @@
             type: eq
             value: "{{ external_orchestrator_name_k8s }}"
         type: and
-  - name: Sock Shop Tetration add sock-shop-prod
+  - name: Sock Shop Tetration add sock-shop
     tetration_inventory_filter:
       provider:
         server_endpoint: "{{ tetration_url }}"
@@ -276,12 +282,12 @@
         api_secret: "{{ api_secret }}"
       app_scope_name: "{{ app_scope_name }}"
       state: present
-      name: sock-shop-prod
+      name: sock-shop
       query:
         filters:
           - field: user_orchestrator_system/namespace
             type: eq
-            value: "sock-shop-prod"
+            value: "sock-shop"
         type: and
   - name: Sock Shop Tetration add carts
     tetration_inventory_filter:
@@ -787,5 +793,3 @@
             type: eq
             value: "{{ k8s_namespace }}"
         type: and
-
-

@@ -165,7 +165,7 @@
       loop_var: port
       label: "Adding port {{ port }} to Sock Shop Policy"
 
-  - name: Add Policy kube-nodes to ntp.ubuntu.com
+  - name: Add Policy kube-nodes to pool.ntp.org
     tetration_application_policy:
         provider:
           server_endpoint: "{{ tetration_url }}"
@@ -173,7 +173,7 @@
           api_secret: "{{ api_secret }}"
         app_id: "{{ application.object.id }}"
         app_scope_id: "{{ application.object.app_scope_id }}"
-        provider_filter_name: ntp.ubuntu.com
+        provider_filter_name: pool.ntp.org
         consumer_filter_name: kube-nodes
         version: v0
         rank: DEFAULT
@@ -182,7 +182,7 @@
         state: present
     register: kube_nodes_ntp_ubuntu_com_policy
 
-  - name: Add Ports to kube-nodes to ntp.ubuntu.com
+  - name: Add Ports to kube-nodes to pool.ntp.org
     tetration_application_policy_ports:
         provider:
           server_endpoint: "{{ tetration_url }}"
@@ -1245,7 +1245,7 @@
       loop_var: port
       label: "Adding port {{ port }} to Sock Shop Policy"
 
-  - name: Add Policy sock-shop-prod to all-addresses
+  - name: Add Policy sock-shop to all-addresses
     tetration_application_policy:
         provider:
           server_endpoint: "{{ tetration_url }}"
@@ -1254,7 +1254,7 @@
         app_id: "{{ application.object.id }}"
         app_scope_id: "{{ application.object.app_scope_id }}"
         provider_filter_name: all-addresses
-        consumer_filter_name: sock-shop-prod
+        consumer_filter_name: sock-shop
         version: v0
         rank: DEFAULT
         policy_action: ALLOW
@@ -1262,7 +1262,7 @@
         state: present
     register: sock_shop_test_all_addresses_policy
 
-  - name: Add Ports to sock-shop-prod to all-addresses
+  - name: Add Ports to sock-shop to all-addresses
     tetration_application_policy_ports:
         provider:
           server_endpoint: "{{ tetration_url }}"
@@ -1340,4 +1340,3 @@
           api_secret: "{{ api_secret }}"
         application_id: "{{ application.object.id }}"
         state: enabled
-
