@@ -74,6 +74,10 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName} Prod Public Subnet (AZ1)
+        - Key: kubernetes.io/cluster/staging-eks
+          Value: shared
+        - Key: kubernetes.io/role/elb
+          Value: 1
   PublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -84,6 +88,10 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName} Prod Public Subnet (AZ2)
+        - Key: kubernetes.io/cluster/staging-eks
+          Value: shared
+        - Key: kubernetes.io/role/elb
+          Value: 1
   PublicSubnet3:
     Type: AWS::EC2::Subnet
     Properties:
@@ -94,6 +102,10 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName} Prod Public Subnet (AZ3)
+        - Key: kubernetes.io/cluster/staging-eks
+          Value: shared
+        - Key: kubernetes.io/role/elb
+          Value: 1
 
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
@@ -105,6 +117,10 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName} Prod Private Subnet (AZ1)
+        - Key: kubernetes.io/cluster/staging-eks
+          Value: shared
+        - Key: kubernetes.io/role/internal-elb
+          Value: 1
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
@@ -115,6 +131,10 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName} Prod Private Subnet (AZ2)
+        - Key: kubernetes.io/cluster/staging-eks
+          Value: shared
+        - Key: kubernetes.io/role/internal-elb
+          Value: 1
   PrivateSubnet3:
     Type: AWS::EC2::Subnet
     Properties:
@@ -125,6 +145,10 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${EnvironmentName} Prod Private Subnet (AZ3)
+        - Key: kubernetes.io/cluster/staging-eks
+          Value: shared
+        - Key: kubernetes.io/role/internal-elb
+          Value: 1
 
   NatGateway1EIP:
     Type: AWS::EC2::EIP
@@ -250,7 +274,7 @@ Resources:
       RouteTableId: !Ref PrivateRouteTable3
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NatGateway3
-  PrivateSubnet2RouteTableAssociation:
+  PrivateSubnet3RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       RouteTableId: !Ref PrivateRouteTable3
